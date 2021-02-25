@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @custom_definition.name %>
+</p>
+
+<p>
+  <strong>Site:</strong>
+  <%= @custom_definition.site_id %>
+</p>
+
+<p>
+  <strong>Report type:</strong>
+  <%= @custom_definition.report_type %>
+</p>
+
+<%= link_to 'Edit', edit_custom_definition_path(@custom_definition) %> |
+<%= link_to 'Back', custom_definitions_path %>

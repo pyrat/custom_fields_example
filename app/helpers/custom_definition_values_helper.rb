@@ -1,0 +1,2 @@
+module CustomDefinitionValuesHelper
+end
