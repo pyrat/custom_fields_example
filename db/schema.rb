@@ -10,36 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_210_225_135_657) do
+ActiveRecord::Schema.define(version: 2021_04_24_135837) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'custom_definition_values', force: :cascade do |t|
-    t.integer 'custom_definition_id'
-    t.string 'content'
-    t.integer 'report_id'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "custom_definition_values", force: :cascade do |t|
+    t.integer "custom_definition_id"
+    t.string "content"
+    t.integer "report_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table 'custom_definitions', force: :cascade do |t|
-    t.string 'name'
-    t.integer 'site_id'
-    t.string 'report_type'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "custom_definitions", force: :cascade do |t|
+    t.string "name"
+    t.integer "site_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "report_type_id"
   end
 
-  create_table 'reports', force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.integer 'site_id'
+  create_table "report_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table 'sites', force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "reports", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "site_id"
+    t.integer "report_type_id"
+    t.index ["report_type_id"], name: "index_reports_on_report_type_id"
   end
+
+  create_table "sites", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end

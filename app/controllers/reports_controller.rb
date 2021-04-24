@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_site
 
   # GET /reports or /reports.json
   def index
@@ -11,11 +12,14 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-    @report = Report.new(site_id: 1)
-    logger.debug("class_name= #{self.class}")
-    @report.site.custom_definitions.where(report_type: @report.class.to_s).each do |defn|
+    report_type = ReportType.find params[:report_type_id]
+    @report = @site.reports.new
+    @report.report_type = report_type
+    @site.custom_definitions.where(report_type_id: report_type.id).each do |defn|
       @report.custom_definition_values.build(custom_definition_id: defn.id)
     end
+    p @report.inspect
+    p @report.custom_definition_values
   end
 
   # GET /reports/1/edit
@@ -23,22 +27,14 @@ class ReportsController < ApplicationController
 
   # POST /reports or /reports.json
   def create
-    @report = Report.new(report_params)
-
-    respond_to do |format|
-      if @report.save
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
-        format.json { render :show, status: :created, location: @report }
-      else
-        @report.site.custom_definitions.where(report_type: @report.class.to_s).each do |defn|
-          @report.custom_definition_values.build(custom_definition_id: defn.id)
-        end
-
-        logger.debug('error saving report')
-        logger.debug(@report.errors.inspect)
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+    @report = @site.reports.new(report_params)
+    if @report.save
+      redirect_to @site
+    else
+      @report.site.custom_definitions.where(report_type: @report.class.to_s).each do |defn|
+        @report.custom_definition_values.build(custom_definition_id: defn.id)
       end
+      render 'new'
     end
   end
 
@@ -58,10 +54,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1 or /reports/1.json
   def destroy
     @report.destroy
-    respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to @site
   end
 
   private
@@ -73,7 +66,7 @@ class ReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def report_params
-    params.require(:report).permit(:name, :site_id,
+    params.require(:report).permit(:name, :report_type_id,
                                    custom_definition_values_attributes: %i[id custom_definition_id content])
   end
 end

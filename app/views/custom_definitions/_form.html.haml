@@ -1,0 +1,15 @@
+= form_with(model: [@site, custom_definition]) do |form|
+
+  = render partial: "shared/errors", locals: { model: custom_definition}
+
+  .mb-3
+    = form.label :name, class: 'form-label'
+    = form.text_field :name, class: 'form-control'
+
+  .mb-3
+    = form.label "Report Type"
+    = form.select :report_type_id, report_types, {},  {class: 'form-select'}
+
+  .mb-3
+    = form.submit 'Create Custom Field', class: 'btn btn-primary'
+

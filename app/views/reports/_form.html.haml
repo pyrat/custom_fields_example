@@ -1,0 +1,16 @@
+= form_with(model: [@site, @report]) do |form|
+  = render partial: "shared/errors", locals: {model: report}
+
+  = form.hidden_field :report_type_id
+
+  .mb-3
+    = form.label :name, class: 'form-label'
+    = form.text_field :name, class: 'form-control'
+
+  = form.fields_for :custom_definition_values do |f|
+    = render partial: "cd_form", locals: {f: f}
+
+  .mb-3
+    = form.submit 'Create', class: 'btn btn-primary'
+    
+

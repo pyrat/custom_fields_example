@@ -1,0 +1,22 @@
+%h1 Report Types
+
+- if @report_types.any?
+
+  %table.table
+    %thead
+      %tr
+        %th
+          Name
+        %th
+          Actions
+    %tbody
+      - @report_types.each do |rt|
+        %tr
+          %td= rt.name
+          %td= link_to 'delete', report_type_path(rt), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+- else
+  .mb-3
+    No report types yet
+
+.mb-3
+  = link_to 'New Report Type', new_report_type_path, class: 'btn btn-primary'

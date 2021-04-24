@@ -1,0 +1,12 @@
+.mb-3
+  Name: 
+  %strong= @report.name
+
+
+.mb-3
+  - @report.custom_definition_values.each do |val|
+    .card
+      .card-body
+        = val.custom_definition.name
+        \:
+        = val.content

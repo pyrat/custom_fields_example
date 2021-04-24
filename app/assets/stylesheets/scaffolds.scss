@@ -13,22 +13,6 @@ pre {
   padding: 10px;
   font-size: 11px; }
 
-a {
-  color: #000; }
-
-a:visited {
-  color: #666; }
-
-a:hover {
-  color: #fff;
-  background-color: #000; }
-
-th {
-  padding-bottom: 5px; }
-
-td {
-  padding: 0 5px 7px; }
-
 div.field,
 div.actions {
   margin-bottom: 10px; }
@@ -36,10 +20,6 @@ div.actions {
 #notice {
   color: green; }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table; }
 
 #error_explanation {
   width: 450px;
@@ -63,3 +43,8 @@ div.actions {
 
 label {
   display: block; }
+ 
+.logo {
+  margin-left: -20px;
+
+}

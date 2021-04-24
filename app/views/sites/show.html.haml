@@ -1,0 +1,37 @@
+%p#notice
+  = notice
+
+
+%h1
+  = @site.name
+
+%h3
+  Reports
+
+- if @site.reports.any?
+  %table.table
+    %thead
+      %tr
+        %th
+          Name
+        %th
+          Report Type
+        %th
+          Actions
+    %tbody
+      - @site.reports.each do |report|
+        %tr
+          %td= link_to report.name, site_report_path(@site, report)
+          %td= report.report_type.name
+          %td
+            = link_to 'Delete', site_report_path(@site, report), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+
+- else
+  .mb-3
+    No Reports yet.
+
+.mb-3
+  - ReportType.all.each do |rp|
+    = link_to "Add #{rp.name} Report", new_site_report_path(@site, report_type_id: rp.id), class: "btn btn-primary"
+
+= render partial: "custom_definitions"

@@ -1,0 +1,22 @@
+%h2 
+  Custom Fields For 
+  = @site.name
+
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Report Type
+      %th Actions
+  
+  %tbody
+    - @site.custom_definitions.each do |cd|
+      %tr
+        %th= cd.name
+        %th= cd.report_type.name
+        %th= link_to 'delete', site_custom_definition_path(@site, cd), method: :delete, confirm: 'Are you sure?', class: 'btn btn-danger'
+
+
+.mb-3
+  = link_to 'New Custom Field', new_site_custom_definition_path(@site), class: 'btn btn-primary'
